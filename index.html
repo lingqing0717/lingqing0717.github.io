@@ -5,237 +5,308 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>谢舒迪 · 个人主页</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #f7f4fb;
+            --text: #1e1a2b;
+            --text-soft: #5a5270;
+            --text-mute: #9a92ad;
+            --line: #e2dbf0;
+            --card: #efe9f8;
+            --accent: #7c4dbe;
+            --accent-soft: #a98bd6;
         }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #16121f;
+                --text: #f0ecf8;
+                --text-soft: #b8b0c8;
+                --text-mute: #7a7290;
+                --line: #2c2438;
+                --card: #201a2c;
+                --accent: #b18ae0;
+                --accent-soft: #8b6bb8;
+            }
+        }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: #f7f5f2;
-            color: #1a1a1a;
+            color: var(--text);
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
+            min-height: 100vh;
+
+            /* ---------- 背景：紫色多层渐变 + 柔光晕 ---------- */
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(160, 120, 220, 0.20), transparent 45%),
+                radial-gradient(circle at 85% 20%, rgba(120, 100, 200, 0.16), transparent 42%),
+                radial-gradient(circle at 50% 95%, rgba(190, 150, 230, 0.14), transparent 50%),
+                linear-gradient(180deg, #faf7fe 0%, #f3eefb 50%, #ece5f8 100%);
+            background-attachment: fixed;
         }
 
-        .container {
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 0 24px;
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: var(--bg);
+                background-image:
+                    radial-gradient(circle at 15% 10%, rgba(110, 70, 170, 0.22), transparent 45%),
+                    radial-gradient(circle at 85% 20%, rgba(80, 60, 140, 0.18), transparent 42%),
+                    radial-gradient(circle at 50% 95%, rgba(130, 90, 180, 0.16), transparent 50%),
+                    linear-gradient(180deg, #1a1526 0%, #14101e 50%, #100c18 100%);
+                background-attachment: fixed;
+            }
         }
 
+        .container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+        /* ---------- Header ---------- */
         .header {
             padding: 72px 0 56px;
-            border-bottom: 1px solid #e0dbd5;
-        }
-
-        .header h1 {
-            font-size: 2.6rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 8px;
-        }
-
-        .header .subtitle {
-            font-size: 1.1rem;
-            color: #6b6560;
-        }
-
-        .header .badge {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 6px 16px;
-            background: #1a1a1a;
-            color: #f7f5f2;
-            font-size: 0.82rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
-        .section {
-            padding: 48px 0;
-            border-bottom: 1px solid #e0dbd5;
-        }
-
-        .section:last-of-type {
-            border-bottom: none;
-        }
-
-        .section-label {
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: #a09890;
-            font-weight: 600;
-            margin-bottom: 28px;
-        }
-
-        .intro-text {
-            font-size: 1.15rem;
-            color: #3d3833;
-            max-width: 620px;
-        }
-
-        .intro-text em {
-            font-style: normal;
-            border-bottom: 2px solid #d4cbc3;
-            padding-bottom: 1px;
-        }
-
-        .timeline {
+            border-bottom: 1px solid var(--line);
             position: relative;
-            padding-left: 32px;
         }
 
-        .timeline::before {
+        .header::after {
             content: '';
             position: absolute;
-            left: 7px;
-            top: 6px;
-            bottom: 6px;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(124, 77, 190, 0.35), transparent);
+        }
+
+        .header-top { display: flex; align-items: center; gap: 28px; margin-bottom: 8px; }
+
+        .avatar-img {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            box-shadow:
+                0 8px 28px rgba(124, 77, 190, 0.15),
+                0 0 0 1px rgba(124, 77, 190, 0.08);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .avatar-img:hover {
+            transform: scale(1.03);
+            box-shadow:
+                0 12px 36px rgba(124, 77, 190, 0.22),
+                0 0 0 1px rgba(124, 77, 190, 0.12);
+        }
+
+        .header h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.02em; }
+        .header .subtitle { font-size: 1.1rem; color: var(--text-soft); }
+
+        .header .badge {
+            display: inline-block; margin-top: 20px; padding: 6px 16px;
+            background: var(--accent); color: #fff;
+            font-size: 0.82rem; letter-spacing: 0.04em;
+            text-transform: uppercase; font-weight: 500;
+            border-radius: 2px;
+        }
+
+        .header .stats {
+            display: flex; flex-wrap: wrap; gap: 28px; margin-top: 24px;
+        }
+        .stat-item { font-size: 0.9rem; color: var(--text-soft); }
+        .stat-item strong {
+            display: block; font-size: 1.5rem; font-weight: 700;
+            color: var(--accent); line-height: 1.2;
+        }
+
+        /* ---------- Section ---------- */
+        .section { padding: 48px 0; border-bottom: 1px solid var(--line); }
+        .section:last-of-type { border-bottom: none; }
+
+        .section-label {
+            font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--accent-soft); font-weight: 600; margin-bottom: 28px;
+        }
+
+        .intro-text { font-size: 1.15rem; color: var(--text-soft); max-width: 620px; }
+        .intro-text em {
+            font-style: normal;
+            border-bottom: 2px solid var(--accent-soft);
+            padding-bottom: 1px;
+            color: var(--accent);
+        }
+
+        /* ---------- Timeline ---------- */
+        .timeline { position: relative; padding-left: 32px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px;
             width: 1.5px;
-            background: #d4cbc3;
+            background: linear-gradient(180deg, var(--accent-soft), var(--line));
         }
 
         .timeline-item {
-            position: relative;
-            margin-bottom: 40px;
+            position: relative; margin-bottom: 40px;
+            padding: 8px 12px; border-radius: 8px;
+            transition: transform 0.2s, background 0.2s;
         }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
+        .timeline-item:hover { transform: translateX(4px); background: var(--card); }
+        .timeline-item:last-child { margin-bottom: 0; }
 
         .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -32px;
-            top: 8px;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #f7f5f2;
-            border: 2px solid #1a1a1a;
+            content: ''; position: absolute; left: -32px; top: 12px;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: var(--bg); border: 2px solid var(--accent);
+            transition: background 0.2s;
         }
-
         .timeline-item.highlight::before {
-            background: #1a1a1a;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(124, 77, 190, 0.15);
         }
 
         .timeline-period {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #a09890;
-            font-weight: 600;
-            margin-bottom: 6px;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--accent-soft); font-weight: 600; margin-bottom: 6px;
         }
+        .timeline-title { font-size: 1.12rem; font-weight: 650; margin-bottom: 4px; }
+        .timeline-desc { font-size: 0.95rem; color: var(--text-soft); max-width: 580px; }
+        .timeline-desc p { margin-bottom: 8px; }
+        .timeline-desc p:last-child { margin-bottom: 0; }
+        .timeline-desc strong { color: var(--accent); font-weight: 600; }
 
-        .timeline-title {
-            font-size: 1.12rem;
-            font-weight: 650;
-            margin-bottom: 4px;
-        }
-
-        .timeline-desc {
-            font-size: 0.95rem;
-            color: #5c5650;
-            max-width: 580px;
-        }
-
-        .timeline-desc p {
-            margin-bottom: 8px;
-        }
-
-        .timeline-desc p:last-child {
-            margin-bottom: 0;
-        }
-
-        .placeholder-note {
-            display: inline-block;
-            margin-top: 6px;
-            font-size: 0.82rem;
-            color: #b5ada5;
-            font-style: italic;
+        .now-tag {
+            display: inline-block; margin-left: 8px; padding: 1px 8px;
+            font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase;
+            background: var(--accent); color: #fff; border-radius: 100px;
+            vertical-align: middle; font-weight: 600;
         }
 
         .quote-block {
-            margin: 32px 0 0;
-            padding: 24px 28px;
-            background: #eeeae6;
-            border-left: 3px solid #1a1a1a;
+            margin: 32px 0 0; padding: 24px 28px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border-left: 3px solid var(--accent);
             font-size: 1rem;
-            color: #3d3833;
-            font-style: italic;
+            color: var(--text-soft); font-style: italic;
+            border-radius: 0 8px 8px 0;
         }
 
-        .trait-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 4px;
+        @media (prefers-color-scheme: dark) {
+            .quote-block { background: rgba(255, 255, 255, 0.05); }
         }
 
+        /* ---------- Awards ---------- */
+        .award-group { margin-bottom: 32px; }
+        .award-group:last-child { margin-bottom: 0; }
+        .award-level {
+            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+            color: var(--accent); text-transform: uppercase; margin-bottom: 10px;
+        }
+        .award-list { list-style: none; }
+        .award-list li {
+            display: flex; justify-content: space-between; gap: 16px;
+            padding: 8px 0; border-bottom: 1px dashed var(--line);
+            font-size: 0.92rem; color: var(--text-soft);
+        }
+        .award-list li:last-child { border-bottom: none; }
+        .award-list .award-name { flex: 1; }
+        .award-list .award-name strong { color: var(--text); font-weight: 600; }
+        .award-list .award-time {
+            flex-shrink: 0; font-size: 0.82rem; color: var(--accent-soft);
+        }
+
+        /* ---------- Traits ---------- */
+        .trait-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
         .trait-tag {
             padding: 8px 18px;
-            background: #eeeae6;
-            color: #3d3833;
-            font-size: 0.88rem;
-            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(6px);
+            color: var(--accent);
+            font-size: 0.88rem; border-radius: 100px;
+            border: 1px solid rgba(124, 77, 190, 0.12);
+            transition: transform 0.15s, background 0.15s;
+            cursor: default;
+        }
+        .trait-tag:hover {
+            transform: translateY(-2px);
+            background: var(--accent);
+            color: #fff;
         }
 
-        .contact-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+        @media (prefers-color-scheme: dark) {
+            .trait-tag { background: rgba(255, 255, 255, 0.06); }
+            .trait-tag:hover { background: var(--accent); }
         }
 
-        .contact-item {
-            font-size: 0.95rem;
-            color: #5c5650;
+        /* ---------- Skills ---------- */
+        .skill-row { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+        .skill-item { font-size: 0.95rem; color: var(--text-soft); }
+        .skill-item strong { color: var(--accent); font-weight: 600; }
+
+        /* ---------- Works ---------- */
+        .work-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 14px; margin-top: 4px;
+        }
+        .work-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(8px);
+            border-radius: 10px; padding: 18px;
+            font-size: 0.9rem; color: var(--text-soft);
+            transition: transform 0.15s, box-shadow 0.15s;
+            border: 1px solid rgba(124, 77, 190, 0.1);
+        }
+        .work-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(124, 77, 190, 0.12);
+        }
+        .work-card .work-title { font-weight: 650; color: var(--accent); margin-bottom: 4px; }
+
+        @media (prefers-color-scheme: dark) {
+            .work-card {
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
         }
 
-        .contact-item strong {
-            color: #1a1a1a;
-            font-weight: 600;
-        }
+        /* ---------- Contact ---------- */
+        .contact-row { display: flex; flex-wrap: wrap; gap: 20px; }
+        .contact-item { font-size: 0.95rem; color: var(--text-soft); }
+        .contact-item strong { color: var(--accent); font-weight: 600; }
+        .contact-item a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+        .contact-item a:hover { border-bottom-color: var(--accent); }
 
-        .footer {
-            padding: 40px 0 56px;
-            font-size: 0.82rem;
-            color: #b5ada5;
-            text-align: center;
+        /* ---------- Footer ---------- */
+        .footer { padding: 40px 0 56px; font-size: 0.82rem; color: var(--text-mute); text-align: center; }
+
+        /* ---------- Back to top ---------- */
+        .to-top {
+            position: fixed; right: 24px; bottom: 24px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--accent); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; cursor: pointer; border: none;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(8px);
+            box-shadow: 0 6px 20px rgba(124, 77, 190, 0.3);
         }
+        .to-top.show { opacity: 0.9; pointer-events: auto; transform: translateY(0); }
+        .to-top:hover { opacity: 1; }
 
         @media (max-width: 600px) {
-            .header {
-                padding: 48px 0 40px;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .section {
-                padding: 36px 0;
-            }
-
-            .timeline {
-                padding-left: 26px;
-            }
-
-            .timeline-item::before {
-                left: -26px;
-                width: 12px;
-                height: 12px;
-            }
-
-            .quote-block {
-                padding: 20px 20px;
-                font-size: 0.95rem;
-            }
+            .header { padding: 48px 0 40px; }
+            .header-top { flex-direction: column; align-items: flex-start; gap: 18px; }
+            .header h1 { font-size: 2rem; }
+            .avatar-img { width: 100px; height: 100px; }
+            .header .stats { gap: 18px; }
+            .stat-item strong { font-size: 1.25rem; }
+            .section { padding: 36px 0; }
+            .timeline { padding-left: 26px; }
+            .timeline-item::before { left: -26px; width: 12px; height: 12px; }
+            .quote-block { padding: 20px 20px; font-size: 0.95rem; }
+            .award-list li { flex-direction: column; gap: 2px; }
         }
     </style>
 </head>
@@ -244,15 +315,26 @@
 <div class="container">
 
     <header class="header">
-        <h1>谢舒迪</h1>
-        <div class="subtitle">湖南大学 · 金融与统计学院</div>
-        <div class="badge">2025 级本科生</div>
+        <div class="header-top">
+            <img src="avatar.jpg" alt="谢舒迪" class="avatar-img">
+            <div>
+                <h1>谢舒迪</h1>
+                <div class="subtitle">湖南大学 · 金融与统计学院 · 金融学</div>
+            </div>
+        </div>
+        <div class="badge">2025 级本科生 · 金融 2503</div>
+
+        <div class="stats">
+            <div class="stat-item"><strong>92.2</strong>加权平均分</div>
+            <div class="stat-item"><strong>4 / 128</strong>专业排名</div>
+            <div class="stat-item"><strong>10 项</strong>大学学年获奖</div>
+        </div>
     </header>
 
     <section class="section">
         <div class="section-label">关于我</div>
         <div class="intro-text">
-            湖南大学金融与统计学院 2025 级本科生。两年前初访岳麓书院，湖大便成为我的<em>“梦中情校”</em>。相信“振我民族，扬我国光”应是湖大青年的人生锚点，以立德笃行、经世济民为宏图之志。
+            湖南大学金融与统计学院 2025 级金融学专业本科生，山东菏泽人，共青团员。两年前初访岳麓书院，湖大便成为我的<em>“梦中情校”</em>。相信“振我民族，扬我国光”应是湖大青年的人生锚点，以立德笃行、经世济民为宏图之志。中小学阶段在演讲、写作、外语、阅读与国防教育等领域持续积累，入学一年在学业、竞赛、志愿服务与国防教育中继续投入，学年素质测评自我鉴定等级为<em>优秀</em>。
         </div>
     </section>
 
@@ -264,7 +346,8 @@
                 <div class="timeline-period">小学阶段</div>
                 <div class="timeline-title">基础教育启蒙</div>
                 <div class="timeline-desc">
-                    <p class="placeholder-note">（待补充）</p>
+                    <p>在小学阶段开始接触演讲、阅读与写作，多次获校“三好学生”“特长鲜明奖”“文明学生”等荣誉。</p>
+                    <p>获区“优秀少先队员”“最佳辩手”等称号。</p>
                 </div>
             </div>
 
@@ -272,8 +355,12 @@
                 <div class="timeline-period">初中阶段</div>
                 <div class="timeline-title">淄博大学城实验中学</div>
                 <div class="timeline-desc">
-                    <p>2021 年获评周村区“新时代好少年”</p>
-                    <p>获评淄博市优秀学生干部</p>
+                    <p><strong>周村区“新时代好少年”</strong> · 2021 年</p>
+                    <p><strong>区“三好学生”“优秀少先队员”“最佳辩手”</strong></p>
+                    <p><strong>区“学宪法 讲宪法”演讲比赛一等奖</strong></p>
+                    <p><strong>淄博市优秀学生干部</strong></p>
+                    <p><strong>淄博市“我读 我创作”二等奖 · 市“阅读小明星”</strong></p>
+                    <p>校“优秀共青团干部”“优秀学生会干部”“优秀共青团员”“优秀学生干部”等。</p>
                 </div>
             </div>
 
@@ -281,25 +368,52 @@
                 <div class="timeline-period">高中阶段</div>
                 <div class="timeline-title">淄博第六中学</div>
                 <div class="timeline-desc">
-                    <p><strong>国防教育知识竞赛一等奖</strong> · 2023 年</p>
-                    <p>获淄博市中小学国防教育知识竞赛高中组一等奖第一名</p>
-                    <p><strong>校学生会主席</strong> · 2023 年</p>
-                    <p>担任淄博六中 2023 届学生会主席，主持“缅怀革命先烈”主题升旗仪式</p>
-                    <p><strong>毕业典礼主持人</strong> · 2025 年</p>
-                    <p>主持淄博六中 2022 级毕业典礼</p>
+                    <p><strong>全国青少年法律知识竞赛二等奖</strong></p>
+                    <p><strong>第 20 届“外研社杯”全国中学生外语素养大赛山东地区决赛一等奖</strong></p>
+                    <p><strong>中国中学生作文大赛山东赛区三等奖</strong></p>
+                    <p><strong>山东省儒学经典跨语言诵读大赛复赛三等奖</strong></p>
+                    <p><strong>山东省首届高中英文阅读素养测评二等奖</strong></p>
+                    <p><strong>淄博市国防教育知识竞赛一等奖</strong>（高中组一等奖第一名）</p>
+                    <p><strong>淄博市“共青团先进个人” · 淄博市“最美中学生标兵”</strong></p>
+                    <p><strong>校学生会主席</strong> · 2023 年，主持“缅怀革命先烈”主题升旗仪式</p>
+                    <p><strong>毕业典礼主持人</strong> · 2025 年，主持淄博六中 2022 级毕业典礼</p>
+                    <p>校“三好学生”“优秀共青团干部”“优秀学生干部”“军训标兵”“四德标兵”等多项荣誉。</p>
                 </div>
             </div>
 
             <div class="timeline-item highlight">
                 <div class="timeline-period">2025 年 9 月 — 至今</div>
-                <div class="timeline-title">湖南大学 · 金融与统计学院</div>
+                <div class="timeline-title">湖南大学 · 金融与统计学院 <span class="now-tag">NOW</span></div>
                 <div class="timeline-desc">
                     <p><strong>本科新生代表发言</strong> · 2025 年 9 月</p>
                     <p>在湖南大学 2025 级新生开学典礼上作为本科新生代表发言，表达“振我民族，扬我国光”的志向。</p>
+
+                    <p><strong>国旗护卫队“优秀训练标兵”</strong> · 2025 年 12 月</p>
+                    <p>在 2025—2026 上半学年国旗护卫队训练中，态度端正、训练刻苦，综合表现突出。</p>
+
+                    <p><strong>岳麓讲习大赛二等奖</strong> · 2025 年 11 月</p>
+                    <p>在金融与统计学院岳麓书院讲习大赛中表现突出，获院级二等奖。</p>
+
                     <p><strong>参与学院宣传工作</strong> · 2025 年 12 月</p>
                     <p>作为金统院作者之一，参与学院获奖新闻的采写与供稿。</p>
-                    <p><strong>“三下乡”社会实践</strong> · 2026 年 8 月</p>
-                    <p>参与青春“三下乡”社会实践，走访企业一线，调研乡村 AI 发展，并参与摄影记录。</p>
+
+                    <p><strong>“挑战杯”大学生创业计划竞赛</strong> · 2026 年</p>
+                    <p>参与项目《脂联生发——治疗雄激素无效的多肽药物》，获省级铜奖、校级一等奖；另获校级三等奖一项。</p>
+
+                    <p><strong>中国国际大学生创新大赛银奖</strong> · 2026 年 5 月</p>
+                    <p>参与项目《脂联生发——雄秃治疗多肽药物创新者》，获校级银奖。</p>
+
+                    <p><strong>全国大学生市场调研与分析大赛二等奖</strong> · 2026 年</p>
+                    <p>参与项目《从“群”运营到“场”深耕——校园外卖社群的客户价值评估与管理策略》，获校级二等奖。</p>
+
+                    <p><strong>参与国家级 SIT 立项</strong> · 2026 年</p>
+                    <p>作为团队成员参与国家级大学生创新创业训练计划项目。</p>
+
+                    <p><strong>“三下乡”社会实践与志愿服务</strong> · 2026 年 8 月</p>
+                    <p>作为湖南大学“彩虹兴和”志愿服务队成员，参与攸县“青春攸你·七彩假期”夏令营志愿服务，团队获评<strong>县级优秀志愿服务团队</strong>；同期走访企业一线，调研乡村 AI 发展，并参与摄影记录。</p>
+
+                    <p><strong>优秀共青团员</strong> · 2026 年 5 月</p>
+                    <p>同时获校级、院级“优秀共青团员”荣誉称号。</p>
                 </div>
             </div>
 
@@ -310,15 +424,155 @@
         </div>
     </section>
 
+    <!-- 荣誉与奖项：小学 → 初中 → 高中 → 大学 -->
+    <section class="section">
+        <div class="section-label">荣誉与奖项</div>
+
+        <div class="award-group">
+            <div class="award-level">小学阶段 · 区级 / 校级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>区“优秀少先队员”“最佳辩手”</strong></span><span class="award-time">小学</span></li>
+                <li><span class="award-name"><strong>校“三好学生”“特长鲜明奖”“文明学生”</strong></span><span class="award-time">小学</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">初中阶段 · 市级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>淄博市“优秀学生干部”</strong></span><span class="award-time">初中</span></li>
+                <li><span class="award-name"><strong>淄博市“我读 我创作”二等奖</strong></span><span class="award-time">初中</span></li>
+                <li><span class="award-name"><strong>市“阅读小明星”称号</strong></span><span class="award-time">初中</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">初中阶段 · 区级 / 校级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>区“新时代好少年”</strong></span><span class="award-time">初中</span></li>
+                <li><span class="award-name"><strong>区“三好学生”“优秀少先队员”“最佳辩手”</strong></span><span class="award-time">初中</span></li>
+                <li><span class="award-name"><strong>区“学宪法 讲宪法”演讲比赛一等奖</strong></span><span class="award-time">初中</span></li>
+                <li><span class="award-name"><strong>校“优秀共青团干部”“优秀学生会干部”“优秀共青团员”“优秀学生干部”</strong></span><span class="award-time">初中</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">高中阶段 · 国家级 / 省级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>全国青少年法律知识竞赛二等奖</strong></span><span class="award-time">高中</span></li>
+                <li><span class="award-name"><strong>“外研社杯”全国中学生外语素养大赛山东地区决赛一等奖</strong></span><span class="award-time">高中</span></li>
+                <li><span class="award-name"><strong>中国中学生作文大赛山东赛区三等奖</strong></span><span class="award-time">高中</span></li>
+                <li><span class="award-name"><strong>山东省儒学经典跨语言诵读大赛复赛三等奖</strong></span><span class="award-time">高中</span></li>
+                <li><span class="award-name"><strong>山东省首届高中英文阅读素养测评二等奖</strong></span><span class="award-time">高中</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">高中阶段 · 市级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>淄博市国防教育知识竞赛一等奖</strong></span><span class="award-time">高中</span></li>
+                <li><span class="award-name"><strong>淄博市“共青团先进个人”</strong></span><span class="award-time">高中</span></li>
+                <li><span class="award-name"><strong>淄博市“最美中学生标兵”</strong></span><span class="award-time">高中</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">高中阶段 · 校级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>校“三好学生”</strong></span><span class="award-time">高中</span></li>
+                <li><span class="award-name"><strong>校“优秀共青团干部”“优秀学生干部”</strong></span><span class="award-time">高中</span></li>
+                <li><span class="award-name"><strong>校“军训标兵”“四德标兵”等</strong></span><span class="award-time">高中</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">大学阶段 · 国家级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>国家级 SIT 立项</strong>（参与）</span><span class="award-time">2026</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">大学阶段 · 省级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>“挑战杯”大学生创业计划竞赛铜奖</strong> · 脂联生发</span><span class="award-time">2026</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">大学阶段 · 县级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>优秀志愿服务团队</strong> · 攸县夏令营</span><span class="award-time">2026.08</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">大学阶段 · 校级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>优秀共青团员</strong></span><span class="award-time">2026.05</span></li>
+                <li><span class="award-name"><strong>“挑战杯”大学生创业计划一等奖</strong></span><span class="award-time">2026</span></li>
+                <li><span class="award-name"><strong>“挑战杯”大学生创业计划三等奖</strong></span><span class="award-time">2026</span></li>
+                <li><span class="award-name"><strong>中国国际大学生创新大赛银奖</strong> · 脂联生发</span><span class="award-time">2026.05</span></li>
+                <li><span class="award-name"><strong>全国大学生市场调研与分析大赛二等奖</strong></span><span class="award-time">2026</span></li>
+                <li><span class="award-name"><strong>国旗护卫队“优秀训练标兵”</strong></span><span class="award-time">2025.12</span></li>
+            </ul>
+        </div>
+
+        <div class="award-group">
+            <div class="award-level">大学阶段 · 院级</div>
+            <ul class="award-list">
+                <li><span class="award-name"><strong>优秀共青团员</strong></span><span class="award-time">2026.05</span></li>
+                <li><span class="award-name"><strong>岳麓讲习大赛二等奖</strong></span><span class="award-time">2025.11</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 技能与兴趣 -->
+    <section class="section">
+        <div class="section-label">技能与兴趣</div>
+        <div class="skill-row">
+            <div class="skill-item"><strong>专业方向：</strong>金融学 · 金融与统计</div>
+            <div class="skill-item"><strong>工具：</strong>Excel / Python（学习中）</div>
+            <div class="skill-item"><strong>语言：</strong>中文（母语）、英语</div>
+            <div class="skill-item"><strong>兴趣：</strong>演讲与辩论、写作、阅读、摄影、志愿服务</div>
+        </div>
+    </section>
+
+    <!-- 作品与记录 -->
+    <section class="section">
+        <div class="section-label">作品与记录</div>
+        <div class="work-grid">
+            <div class="work-card">
+                <div class="work-title">新生代表发言</div>
+                湖南大学 2025 级开学典礼 · 演讲稿 / 现场照片
+            </div>
+            <div class="work-card">
+                <div class="work-title">脂联生发</div>
+                挑战杯省级铜奖 · 中国国际大学生创新大赛校级银奖
+            </div>
+            <div class="work-card">
+                <div class="work-title">市场调研与分析大赛</div>
+                校园外卖社群客户价值评估 · 校级二等奖
+            </div>
+            <div class="work-card">
+                <div class="work-title">三下乡志愿服务</div>
+                攸县夏令营 · 乡村 AI 调研 · 摄影记录
+            </div>
+        </div>
+    </section>
+
     <section class="section">
         <div class="section-label">关键词</div>
         <div class="trait-grid">
-            <span class="trait-tag">金融与统计</span>
+            <span class="trait-tag">金融学</span>
             <span class="trait-tag">新生代表</span>
-            <span class="trait-tag">学生会主席</span>
-            <span class="trait-tag">国防知识竞赛</span>
-            <span class="trait-tag">新时代好少年</span>
-            <span class="trait-tag">社会实践</span>
+            <span class="trait-tag">挑战杯</span>
+            <span class="trait-tag">大创银奖</span>
+            <span class="trait-tag">优秀共青团员</span>
+            <span class="trait-tag">国旗护卫队</span>
+            <span class="trait-tag">演讲与辩论</span>
+            <span class="trait-tag">外语素养</span>
+            <span class="trait-tag">志愿服务</span>
+            <span class="trait-tag">摄影</span>
             <span class="trait-tag">经世济民</span>
         </div>
     </section>
@@ -327,7 +581,9 @@
         <div class="section-label">联系</div>
         <div class="contact-row">
             <div class="contact-item"><strong>学院：</strong>湖南大学金融与统计学院</div>
+            <div class="contact-item"><strong>专业：</strong>金融学 · 金融 2503</div>
             <div class="contact-item"><strong>年级：</strong>2025 级本科</div>
+            <div class="contact-item"><strong>邮箱：</strong><a href="mailto:your@email.com">your@email.com</a></div>
         </div>
     </section>
 
@@ -336,6 +592,18 @@
     </footer>
 
 </div>
+
+<button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+        toTop.classList.toggle('show', window.scrollY > 400);
+    });
+    toTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
 
 </body>
 </html>
